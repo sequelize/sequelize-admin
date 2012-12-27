@@ -7,11 +7,11 @@ define([
 
   // The application object
   // Choose a meaningful name for your application
-  var CorporatePortal = Chaplin.Application.extend({
+  var SequelizeAdmin = Chaplin.Application.extend({
 
     // Set your application name here so the document title is set to
     // "Controller title - Site title" (see Layout#adjustTitle)
-    title: 'Blacklane Corporate Portal',
+    title: 'Sequelize Admin',
 
     initialize: function() {
       // Call the parent constructor.
@@ -70,5 +70,5 @@ define([
     }
   })
 
-  return CorporatePortal
+  return SequelizeAdmin
 })

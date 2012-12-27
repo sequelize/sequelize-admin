@@ -39,9 +39,10 @@ $(function() {
 
   // if (document.title !== 'Buster.JS') {
   //   // Bootstrap the application
-  //   require([ 'bootstrap', 'corporate_portal' ], function(Bootstrap, CorporatePortal) {
-  //     var app = new CorporatePortal()
-  //     app.initialize()
-  //   })
+    require([ 'bootstrap', 'sequelize_admin' ], function(Bootstrap, SequelizeAdmin) {
+      var app = new SequelizeAdmin()
+      app.initialize()
+      console.log('ok')
+    })
   // }
 })
