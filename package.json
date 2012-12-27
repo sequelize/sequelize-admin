@@ -12,5 +12,9 @@
   },
   "author": "",
   "license": "BSD",
-  "readmeFilename": "README.md"
+  "readmeFilename": "README.md",
+  "dependencies": {
+    "lodash": "~1.0.0-rc.3",
+    "node-static": "~0.6.6"
+  }
 }
