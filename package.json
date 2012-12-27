@@ -17,6 +17,7 @@
     "lodash": "~1.0.0-rc.3",
     "node-static": "~0.6.6",
     "jade": "~0.27.7",
-    "stylus": "~0.31.0"
+    "stylus": "~0.31.0",
+    "bootstrap-amd": "~1.0.3"
   }
 }

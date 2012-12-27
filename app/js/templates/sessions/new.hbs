@@ -1,0 +1,23 @@
+<div class="shadow-box span4 offset4">
+  <form accept-charset="UTF-8" action="/login" class="form-vertical" method="post">
+    <h2>Login</h2>
+
+    <div class="control-group email optional">
+      <label class="email optional control-label" for="passenger_email">E-Mail</label>
+      <div class="controls">
+        <input class="string email optional" id="passenger_email" name="passenger[email]" size="50" type="email">
+      </div>
+    </div>
+
+    <div class="control-group password optional">
+      <label class="password optional control-label" for="passenger_password">Passwort</label>
+      <div class="controls">
+        <input class="password optional" id="passenger_password" name="passenger[password]" size="50" type="password">
+      </div>
+    </div>
+
+    <br>
+
+    <input class="btn btn-inverse" name="commit" type="submit" value="Login">
+  </form>
+</div>
