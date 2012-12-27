@@ -2,5 +2,39 @@
 html
   head
     title Sequelize Admin
+    link(rel="stylesheet", type="text/stylesheet", href=endpoint + '/assets/css/bootstrap.min.css')
+    link(rel="stylesheet", type="text/stylesheet", href=endpoint + '/assets/css/bootstrap-responsive.min.css')
+    link(rel="stylesheet", type="text/stylesheet", href=endpoint + '/assets/css/generated/screen.css')
+    meta(name="viewport", content="width=device-width, initial-scale=1.0")
   body
-    | fnord
+    .navbar.navbar-inverse.navbar-fixed-top
+      .navbar-inner
+        .container-fluid
+          a(href='#').brand Sequelize Admin
+          .nav-collapse.collapse
+            ul.nav
+              li.active
+                a(href="#") Home
+              li
+                a(href="#about") About
+              li
+                a(href="#contact") Contact
+    .container-fluid
+      .row-fluid
+        .span3
+          .well.sidebar-nav
+            ul.nav.nav-list
+              li.nav-header Sidebar
+              li.active
+                a(href="#") Link
+              li
+                a(href="#") Link
+              li
+                a(href="#") Link
+              li
+                a(href="#") Link
+        .span9
+          .hero-unit
+            h1 fnord
+
+    script(type="text/javascript", src=endpoint + '/assets/js/bootstrap.min.js')
