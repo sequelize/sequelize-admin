@@ -25,12 +25,11 @@ html
           .well.sidebar-nav
             ul.nav.nav-list
               li.nav-header Models
-              li.active
-                a(href="#") Link
-              - getModelNames().forEach(function(model) {
-                li
+              - getModelNames().forEach(function(model, i) {
+                li(class=(i===0?'active':''))
                   a(href="#")= model
               - })
+
         .span9
           .hero-unit
             h1 fnord
