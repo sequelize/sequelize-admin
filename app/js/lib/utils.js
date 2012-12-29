@@ -1,7 +1,8 @@
 define([
   'underscore',
+  'jquery',
   'chaplin'
-], function(_, Chaplin) {
+], function(_, $, Chaplin) {
   'use strict'
 
   // Application-specific utilities
@@ -16,6 +17,12 @@ define([
   //   someProperty: 'foo',
   //   someMethod: function() {}
   // });
+
+  _(utils).extend({
+    getEndpoint: function() {
+      return $('[data-endpoint]').data('endpoint')
+    }
+  })
 
   return utils;
 });

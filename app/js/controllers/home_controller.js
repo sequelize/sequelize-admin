@@ -1,9 +1,9 @@
 define([
   'controllers/base/controller',
   'models/home',
-  'views/home_view'
-], function(Controller, Home, HomeView) {
-  'use strict'
+  'views/home/index'
+], function(Controller, Home, HomeIndex) {
+  'use strict';
 
   var HelloWorldController = Controller.extend({
     title: 'Home',
@@ -12,9 +12,8 @@ define([
       return ''
     },
 
-    show: function(params) {
-      this.model = new Home()
-      this.view = new HomeView({ model: this.model });
+    index: function(params) {
+      this.view   = new HomeIndex();
     }
   });
 

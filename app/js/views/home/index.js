@@ -1,6 +1,6 @@
 define([
   'views/base/view',
-  'text!templates/home.hbs'
+  'text!templates/home/index.hbs'
 ], function(View, template) {
   'use strict';
 
@@ -11,10 +11,11 @@ define([
     // In the end you might want to used precompiled templates.
     template: template,
 
-    className: 'home',
+    className: 'home index',
 
     // Automatically append to the DOM on render
-    container: '#body > .container',
+    container: '.hero-unit',
+
     // Automatically render after initialize
     autoRender: true
   });

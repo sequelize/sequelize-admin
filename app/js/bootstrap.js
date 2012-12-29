@@ -37,12 +37,8 @@ $(function() {
     , urlArgs: 'bust=' +  (new Date()).getTime()
   })
 
-  // if (document.title !== 'Buster.JS') {
-  //   // Bootstrap the application
-    require([ 'bootstrap', 'sequelize_admin' ], function(Bootstrap, SequelizeAdmin) {
-      var app = new SequelizeAdmin()
-      app.initialize()
-      console.log('ok')
-    })
-  // }
+  require([ 'bootstrap', 'sequelize_admin' ], function(Bootstrap, SequelizeAdmin) {
+    var app = new SequelizeAdmin({ title: 'fnord' })
+    app.initialize()
+  })
 })

@@ -1,8 +1,10 @@
 define([
   'chaplin',
+  'lib/utils',
   'views/layout',
+  'views/navigation',
   'routes'
-], function(Chaplin, Layout, routes) {
+], function(Chaplin, Utils, Layout, Navigation, routes) {
   'use strict';
 
   // The application object
@@ -27,7 +29,7 @@ define([
       this.initControllers()
 
       // Register all routes and start routing
-      this.initRouter(routes)
+      this.initRouter(routes, { root: Utils.getEndpoint() })
       // You might pass Router/History options as the second parameter.
       // Chaplin enables pushState per default and Backbone uses / as
       // the root per default. You might change that in the options
@@ -51,6 +53,7 @@ define([
     // Instantiate common controllers
     // ------------------------------
     initControllers: function() {
+      new Navigation({ models: this.models })
       // These controllers are active during the whole application runtime.
       // You don’t need to instantiate all controllers here, only special
       // controllers which do not to respond to routes. They may govern models
