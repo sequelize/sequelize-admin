@@ -1,9 +1,10 @@
 define([
   'jquery',
+  'handlebars',
   'views/base/view',
   'lib/utils',
   'text!templates/navigation.hbs'
-], function($, View, Utils, template) {
+], function($, Handlebars, View, Utils, template) {
   'use strict';
 
   var HomeView = View.extend({
@@ -21,9 +22,31 @@ define([
     // Automatically render after initialize
     autoRender: true,
 
-    render: function() {
+    getModels: function(callback) {
       $.get(Utils.getEndpoint() + '/api').success(function(response) {
-        this.$el.html(Handlebars.compile(template)({ models: response.data }))
+        var models = response.data
+
+        models = models.sort(function(a, b) {
+          if (a.name < b.name) { return -1 }
+          if (a.name > b.name) { return 1 }
+
+          return 0
+        })
+
+        models[0].active = true
+
+        callback(response.data)
+      })
+    },
+
+    render: function() {
+      this.getModels(function(models) {
+        var content = Handlebars.compile(template)({
+          models:   models,
+          endpoint: Utils.getEndpoint()
+        })
+
+        this.$el.html(content)
       }.bind(this))
 
       return this
