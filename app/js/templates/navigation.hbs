@@ -1,8 +1,10 @@
 <ul class="nav nav-list">
   <li class="nav-header">Models</li>
   {{#each models}}
-  <li {{#if active}}class="active"{{/if}}>
-    <a href="#">{{name}}</a>
-  </li>
+    {{#if active}}
+      <li class="active"><a href="#">{{name}}</a></li>
+    {{else}}
+      <li><a href="{{path}}">{{name}}</a></li>
+    {{/if}}
   {{/each}}
 </ul>

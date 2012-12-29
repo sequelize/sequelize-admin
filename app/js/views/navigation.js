@@ -26,16 +26,22 @@ define([
       $.get(Utils.getEndpoint() + '/api').success(function(response) {
         var models = response.data
 
-        models = models.sort(function(a, b) {
+        models.sort(function(a, b) {
           if (a.name < b.name) { return -1 }
           if (a.name > b.name) { return 1 }
 
           return 0
         })
 
-        models[0].active = true
+        models.forEach(function(model, i) {
+          model.path = Utils.getEndpoint() + '/' + model.tableName
 
-        callback(response.data)
+          if (i === 0) {
+            model.active = true
+          }
+        })
+
+        callback(models)
       })
     },
 
