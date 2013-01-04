@@ -6,7 +6,7 @@ define([
   'use strict';
 
   var View = Chaplin.View.extend({
-    container: '#body > .container',
+    container: '#main',
     autoRender: true,
 
     getTemplateFunction: function(){

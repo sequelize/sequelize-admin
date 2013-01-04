@@ -2,9 +2,8 @@ define([
   'chaplin',
   'lib/utils',
   'views/layout',
-  'views/navigation',
   'routes'
-], function(Chaplin, Utils, Layout, Navigation, routes) {
+], function(Chaplin, Utils, Layout, routes) {
   'use strict';
 
   // The application object
@@ -53,7 +52,6 @@ define([
     // Instantiate common controllers
     // ------------------------------
     initControllers: function() {
-      new Navigation({ models: this.models })
       // These controllers are active during the whole application runtime.
       // You don’t need to instantiate all controllers here, only special
       // controllers which do not to respond to routes. They may govern models

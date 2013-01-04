@@ -3,5 +3,6 @@ define(function() {
 
   return function(match) {
     match('', 'home#index')
+    match(':daoFactory', 'dao_factories#index')
   }
 })

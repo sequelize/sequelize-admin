@@ -20,9 +20,9 @@ define([
     container: '.sidebar-nav',
 
     // Automatically render after initialize
-    autoRender: true,
+    autoRender: false,
 
-    getModels: function(callback) {
+    getDaoFactories: function(callback) {
       $.get(Utils.getEndpoint() + '/api').success(function(response) {
         var models = response.data
 
@@ -33,31 +33,39 @@ define([
           return 0
         })
 
-        models.forEach(function(model, i) {
+        this.options.daoFactory = this.options.daoFactory || models[0].tableName
+
+        models.forEach(function(model) {
           model.path = Utils.getEndpoint() + '/' + model.tableName
 
-          if (i === 0) {
+          if (model.tableName === this.options.daoFactory) {
             model.active = true
           }
-        })
+        }.bind(this))
 
         callback(models)
-      })
+      }.bind(this))
     },
 
-    render: function() {
-      this.getModels(function(models) {
+    render: function(models) {
+      var render = function(models) {
         var content = Handlebars.compile(template)({
           models:   models,
           endpoint: Utils.getEndpoint()
         })
 
         this.$el.html(content)
-      }.bind(this))
+      }.bind(this)
+
+      if (!!models) {
+        render(models)
+      } else {
+        this.getDaoFactories(render)
+      }
 
       return this
     }
-  });
+  })
 
-  return HomeView;
-});
+  return HomeView
+})

@@ -13,9 +13,6 @@ define([
 
     className: 'home index',
 
-    // Automatically append to the DOM on render
-    container: '.hero-unit',
-
     // Automatically render after initialize
     autoRender: true
   });
