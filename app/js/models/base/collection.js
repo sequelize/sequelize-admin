@@ -1,13 +1,18 @@
 define([
-  'chaplin'
-], function(Chaplin) {
+  'chaplin',
+  'lib/utils'
+], function(Chaplin, Utils) {
   'use strict';
 
   var Collection = Chaplin.Collection.extend({
+    endpoint: Utils.getEndpoint(),
 
-    // Place your application-specific collection features here
+    parse: function(response) {
+      return response.data.map(function(data) {
+        return new this.model(data)
+      }.bind(this))
+    }
+  })
 
-  });
-
-  return Collection;
-});
+  return Collection
+})

@@ -1,9 +1,10 @@
 define([
+  'backbone',
   'chaplin',
   'lib/utils',
   'views/layout',
   'routes'
-], function(Chaplin, Utils, Layout, routes) {
+], function(Backbone, Chaplin, Utils, Layout, routes) {
   'use strict';
 
   // The application object

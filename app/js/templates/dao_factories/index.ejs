@@ -1,0 +1,21 @@
+<h2><%= tableName %></h2>
+
+<table class="table table-striped table-bordered">
+  <tr>
+    <% attributeNames.forEach(function(key) { %>
+      <th><%= key %></th>
+    <% }) %>
+    <th>Actions</th>
+  </tr>
+  <% daos.forEach(function(dao) { %>
+    <tr data-id="<%= dao.id %>">
+      <% attributeNames.forEach(function(key) { %>
+        <td><%= dao.get(key) %></td>
+      <% }) %>
+      <td width="80" class="actions">
+        <span><i class="icon-edit"></i> Edit</span>
+        <span><i class="icon-trash"></i> Delete</span>
+      </td>
+    </tr>
+  <% }) %>
+</table>

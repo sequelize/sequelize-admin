@@ -1,12 +1,15 @@
 define([
-  'chaplin'
-], function(Chaplin) {
+  'chaplin',
+  'lib/utils'
+], function(Chaplin, Utils) {
   'use strict';
 
   var Model = Chaplin.Model.extend({
+    endpoint: Utils.getEndpoint(),
 
-    // Place your application-specific model features here
-
+    parse: function(response) {
+      return response.data
+    }
   })
 
   return Model
