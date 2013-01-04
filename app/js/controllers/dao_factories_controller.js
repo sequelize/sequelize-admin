@@ -50,6 +50,11 @@ define([
           }.bind(this)
         })
       }.bind(this))
+    },
+
+    edit: function(params) {
+      console.log(params)
+      console.log('cool')
     }
   })
 
