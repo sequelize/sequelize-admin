@@ -4,8 +4,9 @@ define([
   'controllers/dao_factories_controller',
   'models/dao',
   'models/dao_collection',
+  'models/dao_factory',
   'views/daos/index'
-], function(_, Controller, DaoFactoriesController, Dao, DaoCollection, IndexView) {
+], function(_, Controller, DaoFactoriesController, Dao, DaoCollection, DaoFactory, IndexView) {
   'use strict';
 
   var DaosController = Controller.extend({

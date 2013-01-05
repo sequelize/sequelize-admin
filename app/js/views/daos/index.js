@@ -18,8 +18,8 @@ define([
           , id        = $tr.data('id')
           , tableName = $tr.data('table-name')
 
-        require(['controllers/dao_factories_controller'], function(DaoFactoriesController) {
-          new DaoFactoriesController().edit({ id: id, tableName: tableName })
+        require(['controllers/daos_controller'], function(DaosController) {
+          new DaosController().edit({ id: id, tableName: tableName })
         })
       },
 
