@@ -5,6 +5,9 @@ define([
   'use strict';
 
   var DaoFactory = Model.extend({
+    initialize: function(attributes) {
+      this.url = this.endpoint + '/api/' + attributes.tableName + '/' + attributes.id
+    }
   })
 
   return DaoFactory

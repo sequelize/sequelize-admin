@@ -4,7 +4,8 @@ define([
   'controllers/base/controller',
   'models/dao_factory',
   'models/dao_factory_collection',
-  'views/dao_factories/index'
+  'views/dao_factories/index',
+  'views/dao_factories/edit'
 ], function(
   _,
 
@@ -21,7 +22,8 @@ define([
   DaoFactoryCollection,
 
   // the views
-  DaoFactoriesIndex
+  DaoFactoriesIndex,
+  DaoFactoriesEdit
 ) {
   'use strict';
 
@@ -53,8 +55,14 @@ define([
     },
 
     edit: function(params) {
-      console.log(params)
-      console.log('cool')
+      new DaoFactory({ id: params.id, tableName: params.tableName }).fetch({
+        success: function() {
+          console.log(arguments)
+        }
+      })
+
+      this.view = new DaoFactoriesEdit({
+      })
     }
   })
 

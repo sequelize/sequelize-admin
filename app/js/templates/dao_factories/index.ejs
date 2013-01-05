@@ -8,7 +8,7 @@
     <th>Actions</th>
   </tr>
   <% daos.forEach(function(dao) { %>
-    <tr data-id="<%= dao.id %>">
+    <tr data-id="<%= dao.id %>" data-table-name="<%= tableName %>">
       <% attributeNames.forEach(function(key) { %>
         <td><%= dao.get(key) %></td>
       <% }) %>

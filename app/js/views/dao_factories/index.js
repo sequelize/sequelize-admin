@@ -13,20 +13,13 @@ define([
 
     events: {
       "click .actions .edit": function(e) {
-        var $element = $(e.target)
-          , id       = $element.parents("tr").data('id')
-
-        if ($('.modal').length === 0) {
-          $('<div>')
-            .addClass('modal hide fade')
-            .attr('tabindex', '-1')
-            .attr('role', 'dialog')
-            .attr('aria-labelledby', "dao_factory_edit_label")
-            .appendTo($('body'))
-        }
+        var $element  = $(e.target)
+          , $tr       = $element.parents("tr")
+          , id        = $tr.data('id')
+          , tableName = $tr.data('table-name')
 
         require(['controllers/dao_factories_controller'], function(DaoFactoriesController) {
-          new DaoFactoriesController().edit({ id: id })
+          new DaoFactoriesController().edit({ id: id, tableName: tableName })
         })
       },
 

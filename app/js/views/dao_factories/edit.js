@@ -12,7 +12,18 @@ define([
     autoRender: true,
     container:  '.modal',
     render:     function() {
-      this.$el.html(_.template(template)(this.options))
+      if ($('.modal').length === 0) {
+        $('<div>')
+          .addClass('modal')
+          .attr('tabindex', '-1')
+          .attr('role', 'dialog')
+          .attr('aria-labelledby', "dao_factory_edit_label")
+          .appendTo($('body'))
+      }
+
+      this.$el.html(_.template(template)(this.options)).modal({
+        keyboard: true
+      })
     }
   })
 })
