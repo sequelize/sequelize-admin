@@ -10,6 +10,7 @@ define([
 
     initialize: function(attributes) {
       this.url = this.endpoint + '/api/' + attributes.tableName
+      this.tableName = attributes.tableName
     }
   })
 

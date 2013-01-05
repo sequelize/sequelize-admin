@@ -1,7 +1,8 @@
 define([
+  'underscore',
   'chaplin',
   'models/base/model'
-], function(Chaplin, Model) {
+], function(_, Chaplin, Model) {
   'use strict';
 
   var DaoFactory = Model.extend({
