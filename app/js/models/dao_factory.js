@@ -6,7 +6,15 @@ define([
 
   var DaoFactory = Model.extend({
     initialize: function(attributes) {
-      this.url = this.endpoint + '/api/' + attributes.tableName + '/' + attributes.id
+      this.url = this.endpoint + '/api/' + attributes.tableName
+    },
+
+    getPath: function() {
+      return this.endpoint + '/' + this.get('tableName')
+    },
+
+    isActive: function(selectedTableName) {
+      return this.get('tableName') === selectedTableName
     }
   })
 

@@ -20,7 +20,7 @@ define([
           .attr('aria-labelledby', "dao_factory_edit_label")
           .appendTo($('body'))
       }
-
+console.log(this.options)
       this.$el.html(_.template(template)(this.options)).modal({
         keyboard: true
       })

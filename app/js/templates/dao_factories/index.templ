@@ -1,0 +1,10 @@
+<ul class="nav nav-list">
+  <li class="nav-header">Models</li>
+  <% daoFactories.forEach(function(daoFactory) { %>
+    <% if (daoFactory.isActive(selectedTableName)) { %>
+      <li class="active"><a href="#"><%= daoFactory.get('name') %></a></li>
+    <% } else { %>
+      <li><a href="<%= daoFactory.getPath() %>"><%= daoFactory.get('name') %></a></li>
+    <% } %>
+  <% }) %>
+</ul>

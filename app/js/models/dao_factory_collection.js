@@ -9,7 +9,7 @@ define([
     model: DaoFactory,
 
     initialize: function(attributes) {
-      this.url = this.endpoint + '/api/' + attributes.tableName
+      this.url = this.endpoint + '/api'
     }
   })
 

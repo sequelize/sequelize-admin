@@ -1,29 +1,15 @@
 define([
   'underscore',
-  'views/navigation',
   'controllers/base/controller',
   'models/dao_factory',
   'models/dao_factory_collection',
-  'views/dao_factories/index',
-  'views/dao_factories/edit'
+  'views/dao_factories/index'
 ], function(
   _,
-
-  // the navigation accessor
-  Navigation,
-
-  // the basic controller
   Controller,
-
-  // the dao factory model
   DaoFactory,
-
-  // the dao factory collection
   DaoFactoryCollection,
-
-  // the views
-  DaoFactoriesIndex,
-  DaoFactoriesEdit
+  DaoFactoriesIndex
 ) {
   'use strict';
 
@@ -31,37 +17,47 @@ define([
     title: 'DAO Factory',
 
     index: function(params) {
-      this.navigation = new Navigation({ daoFactory: params.daoFactory })
+      new DaoFactoryCollection().fetch({
+        success: function(daoFactories) {
+          this.view = new DaoFactoriesIndex({
+            daoFactories: daoFactories,
+            tableName: params.daoFactory
+          })
+        }.bind(this)
+      })
 
-      this.navigation.getDaoFactories(function(daoFactories) {
-        this.navigation.render(daoFactories)
 
-        var daoFactory = daoFactories.filter(function(daoFactory) {
-          return daoFactory.active
-        })[0]
+      // this.navigation = new Navigation({ daoFactory: params.daoFactory })
 
-        new DaoFactoryCollection({
-          tableName: daoFactory.tableName
-        }).fetch({
-          success: function(res) {
-            this.view = new DaoFactoriesIndex({
-              tableName:      daoFactory.tableName,
-              attributeNames: sortAttributes(_.keys(res.models[0].attributes)),
-              daos:           res.models
-            })
-          }.bind(this)
-        })
-      }.bind(this))
+      // this.navigation.getDaoFactories(function(daoFactories) {
+      //   this.navigation.render(daoFactories)
+
+      //   var daoFactory = daoFactories.filter(function(daoFactory) {
+      //     return daoFactory.active
+      //   })[0]
+
+      //   new DaoFactoryCollection({
+      //     tableName: daoFactory.tableName
+      //   }).fetch({
+      //     success: function(res) {
+      //       this.view = new DaoFactoriesIndex({
+      //         tableName:      daoFactory.tableName,
+      //         attributeNames: sortAttributes(_.keys(res.models[0].attributes)),
+      //         daos:           res.models
+      //       })
+      //     }.bind(this)
+      //   })
+      // }.bind(this))
     },
 
     edit: function(params) {
+      var daoFactory = { tableName: params.tableName }
       new DaoFactory({ id: params.id, tableName: params.tableName }).fetch({
-        success: function() {
-          console.log(arguments)
-        }
-      })
-
-      this.view = new DaoFactoriesEdit({
+        success: function(dao) {
+          this.view = new DaoFactoriesEdit({
+            model: dao
+          })
+        }.bind(this)
       })
     }
   })
