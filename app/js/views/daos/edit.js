@@ -2,7 +2,8 @@ define([
   'jquery',
   'underscore',
   'views/base/view',
-  'text!templates/daos/edit.ejs'
+  'text!templates/daos/edit.html',
+  'datepicker' // no result, just load the file
 ], function($, _, View, template) {
   'use strict';
 
@@ -22,9 +23,18 @@ define([
           .appendTo($('body'))
       }
 
-      this.$el.html(_.template(template)(this.options)).modal({
-        keyboard: true
-      })
+      this.$el
+        .html(_.template(template)(this.options))
+        .modal({ keyboard: true })
+        .on('shown', function() {
+          $('.date').datepicker()
+
+          setTimeout(function() {
+            this.$el.find('input')[0].focus()
+          }.bind(this), 100)
+        }.bind(this))
+        .on('hidden', function() { $('.modal').remove() })
+        .trigger('shown') // dunno why this isn't trigger automatically
     }
   })
 })

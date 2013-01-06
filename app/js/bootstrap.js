@@ -14,7 +14,9 @@ $(function() {
       jquery:     'vendor/jquery-1.8.2',
       text:       'vendor/require-text-2.0.3',
       underscore: 'vendor/underscore-1.4.2',
-      bootstrap:  'vendor/bootstrap/main'
+      bootstrap:  'vendor/bootstrap/main',
+      datepicker: 'vendor/bootstrap-datepicker',
+      moment:     'vendor/moment.min'
     },
 
     // Underscore and Backbone are not AMD-capable per default,
@@ -29,6 +31,11 @@ $(function() {
       },
       handlebars: {
         exports: 'Handlebars'
+      },
+
+      datepicker: {
+        deps:    ['jquery', 'bootstrap', 'moment'],
+        exports: '$.fn.datepicker'
       }
     }
 

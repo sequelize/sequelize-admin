@@ -36,7 +36,7 @@ define([
     edit: function(params) {
       new DaoFactory({ tableName: params.tableName }).fetch({
         success: function(daoFactory) {
-          new Dao({ id: params.id, tableName: daoFactory.tableName }).fetch({
+          new Dao({ id: params.id, tableName: daoFactory.get('tableName') }).fetch({
             success: function(dao) {
               console.log('dao factory', daoFactory)
               console.log('dao', dao)
