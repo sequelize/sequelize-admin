@@ -1,9 +1,10 @@
 define([
   'underscore',
   'chaplin',
+  'backbone',
   'models/base/model'
-], function(_, Chaplin, Model) {
-  'use strict';
+], function(_, Chaplin, Backbone, Model) {
+  // 'use strict';
 
   var DaoFactory = Model.extend({
     initialize: function(attributes) {
@@ -16,6 +17,11 @@ define([
 
     isActive: function(selectedTableName) {
       return this.get('tableName') === selectedTableName
+    },
+
+    sync: function(method, model, options) {
+      options.type = 'HEAD'
+      return Backbone.sync(method, model, options)
     }
   })
 

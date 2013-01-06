@@ -5,8 +5,14 @@ define([
   'models/dao',
   'models/dao_collection',
   'models/dao_factory',
-  'views/daos/index'
-], function(_, Controller, DaoFactoriesController, Dao, DaoCollection, DaoFactory, IndexView) {
+  'views/daos/index',
+  'views/daos/edit'
+], function(
+  _,
+  Controller, DaoFactoriesController,
+  Dao, DaoCollection, DaoFactory,
+  IndexView, EditView
+) {
   'use strict';
 
   var DaosController = Controller.extend({
@@ -32,7 +38,14 @@ define([
         success: function(daoFactory) {
           new Dao({ id: params.id, tableName: daoFactory.tableName }).fetch({
             success: function(dao) {
-              console.log(daoFactory, dao)
+              console.log('dao factory', daoFactory)
+              console.log('dao', dao)
+
+              this.view = new EditView({
+                daoFactory:     daoFactory,
+                dao:            dao,
+                attributeNames: dao.getSortedAttributes()
+              })
             }.bind(this)
           })
         }.bind(this)

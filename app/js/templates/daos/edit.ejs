@@ -1,9 +1,12 @@
 <div class="modal-header">
   <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-  <h3 id="dao_factory_edit_label">Edit <%= model.get('tableName') %> #<%= model.get('id') %></h3>
+  <h3 id="dao_factory_edit_label">
+    Edit <%= daoFactory.get('tableName') %> #<%= dao.get('id') %>
+  </h3>
 </div>
 <div class="modal-body">
-  <%= JSON.stringify(model.attributes) %>
+  <%= JSON.stringify(dao.attributes) %>
+  <%= JSON.stringify(daoFactory) %>
   <p>One fine body…</p>
 </div>
 <div class="modal-footer">
