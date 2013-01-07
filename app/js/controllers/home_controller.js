@@ -1,21 +1,22 @@
 define([
   'controllers/base/controller',
-  'models/home',
-  'views/home/index'
-], function(Controller, Home, HomeIndex) {
+  'models/dao_factory_collection'
+], function(Controller, DaoFactoryCollection) {
   'use strict';
 
-  var HelloWorldController = Controller.extend({
+  return Controller.extend({
     title: 'Home',
 
-    historyURL: function(params) {
+    historyURL: function() {
       return ''
     },
 
-    index: function(params) {
-      this.view   = new HomeIndex();
+    index: function() {
+      new DaoFactoryCollection().fetch({
+        success: function(collection) {
+          document.location.href = this.endpoint + '/' + collection.models[0].get('tableName')
+        }.bind(this)
+      })
     }
-  });
-
-  return HelloWorldController;
-});
+  })
+})

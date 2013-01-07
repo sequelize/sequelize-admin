@@ -1,11 +1,12 @@
-define(['chaplin'], function(Chaplin) {
+define([
+  'chaplin',
+  'lib/utils'
+], function(Chaplin, Utils) {
   'use strict';
 
   var Controller = Chaplin.Controller.extend({
-    
-    // Place your application-specific controller features here
-    
-  });
+    endpoint: Utils.getEndpoint()
+  })
 
-  return Controller;
-});
+  return Controller
+})
