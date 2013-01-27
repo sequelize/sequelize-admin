@@ -34,6 +34,8 @@
             <input class="datetime" type="number" name="<%= accessor %>[hour]"    value="<%= moment(value).format('HH') %>" placeholder="19">
             <input class="datetime" type="number" name="<%= accessor %>[minutes]" value="<%= moment(value).format('mm') %>" placeholder="31">
             <input class="datetime" type="number" name="<%= accessor %>[seconds]" value="<%= moment(value).format('ss') %>" placeholder="00">
+          <% } else if (dataType.toLowerCase().indexOf('text') !== -1) { %>
+            <textarea name="<%= accessor %>"><%= value %></textarea>
           <% } else { %>
             Whoops. I forgot this data type. Please open an issue at Github :)<br>
             Missing dataType: <%= dataType %>
