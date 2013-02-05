@@ -2,7 +2,7 @@ define([
   'jquery',
   'underscore',
   'views/base/view',
-  'text!templates/daos/edit.html',
+  'text!templates/dao_factories/new.html',
   'datepicker' // no result, just load the file
 ], function($, _, View, template) {
   'use strict';
@@ -19,12 +19,12 @@ define([
           .addClass('modal')
           .attr('tabindex', '-1')
           .attr('role', 'dialog')
-          .attr('aria-labelledby', "dao_factory_edit_label")
+          .attr('aria-labelledby', "dao_factories_new_label")
           .appendTo($('body'))
       }
 
       this.$el
-        .html(_.template(template)(this.options))
+        .html(_.template(template)(this))
         .modal({ keyboard: true })
         .on('shown', function() {
           $('.date').datepicker()

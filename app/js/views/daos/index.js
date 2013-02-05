@@ -12,25 +12,41 @@ define([
     autoRender: true,
 
     events: {
-      "click .actions .edit": function(e) {
-        var $element  = $(e.target)
-          , $tr       = $element.parents("tr")
-          , id        = $tr.data('id')
-          , tableName = $tr.data('table-name')
+      "click .dao-factory-actions .new": function(e) {
+        require(['controllers/dao_factories_controller'], function(DaoFactoriesController) {
+          var tableName = $(e.target).parent().data('table-name')
+          new DaoFactoriesController()['new']({ tableName: tableName })
+        }.bind(this))
+      },
 
+      "click .actions .edit": function(e) {
         require(['controllers/daos_controller'], function(DaosController) {
-          new DaosController().edit({ id: id, tableName: tableName })
-        })
+          new DaosController().edit(this.getRowData(e.target))
+        }.bind(this))
       },
 
       "click .actions .delete": function(e) {
-        var $element = $(e.target)
-          , id       = $element.parents("tr").data('id')
+
+        // require(['controllers/daos_controller'], function(DaosController) {
+        //   new DaosController().destroy(this.getRowData(e.target))
+        // }.bind(this))
       }
     },
 
-    render:     function() {
+    render: function() {
       this.$el.html(_.template(template)(this.options))
+    },
+
+    getRowData: function(dom) {
+      var $element  = $(dom)
+        , $tr       = $element.parents("tr")
+        , id        = $tr.data('id')
+        , tableName = $tr.data('table-name')
+
+      return {
+        id:        id,
+        tableName: tableName
+      }
     }
   })
 })

@@ -3,13 +3,15 @@ define([
   'controllers/base/controller',
   'models/dao_factory',
   'models/dao_factory_collection',
-  'views/dao_factories/index'
+  'views/dao_factories/index',
+  'views/dao_factories/new'
 ], function(
   _,
   Controller,
   DaoFactory,
   DaoFactoryCollection,
-  DaoFactoriesIndex
+  DaoFactoriesIndex,
+  DaoFactoriesNew
 ) {
   'use strict';
 
@@ -19,7 +21,7 @@ define([
     index: function(params) {
       new DaoFactoryCollection().fetch({
         success: function(daoFactories) {
-          this.view = new DaoFactoriesIndex({
+          new DaoFactoriesIndex({
             daoFactories: daoFactories,
             tableName: params.daoFactory
           })
@@ -27,13 +29,16 @@ define([
       })
     },
 
-    edit: function(params) {
-      var daoFactory = { tableName: params.tableName }
-      new DaoFactory({ id: params.id, tableName: params.tableName }).fetch({
-        success: function(dao) {
-          this.view = new DaoFactoriesEdit({
-            model: dao
+    'new': function(params) {
+      new DaoFactory(params).fetch({
+        success: function(daoFactory) {
+          new DaoFactoriesNew({
+            model: daoFactory
           })
+        }.bind(this),
+
+        error: function() {
+
         }.bind(this)
       })
     }

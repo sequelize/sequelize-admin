@@ -1,0 +1,54 @@
+<div class="modal-header">
+  <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+  <h3 id="dao_factories_new_label">
+    New <%= model.get('name') %>
+  </h3>
+</div>
+<div class="modal-body">
+  <form class="form-horizontal">
+    <% for (var key in model.get('attributes')) { %>
+      <%
+        var dataType = model.get('attributes')[key]
+          , accessor = model.get('name') + "[" + key + "]"
+          , value    = 'Asd'
+
+        if (typeof dataType === 'object') {
+          dataType = dataType.type
+        }
+      %>
+
+      <div class="control-group">
+        <label class="control-label" for="input_<%= key %>"><%= key %></label>
+        <div class="controls">
+          <% if (dataType.toLowerCase().indexOf('varchar') !== -1) { %>
+            <input type="text" name="<%= accessor %>" placeholder="<%= key %>">
+          <% } else if (dataType.toLowerCase().indexOf('integer') !== -1) { %>
+            <input type="number" name="<%= accessor %>" placeholder="<%= key %>">
+          <% } else if (dataType.toLowerCase().indexOf('datetime') !== -1) { %>
+            <%
+              var format = 'DD.MM.YYYY'
+                , value  = new Date()
+            %>
+
+            <div class="input-append date" data-date="<%= moment(value).format(format) %>" data-date-format="<%= format.toLowerCase() %>">
+              <input type="text" value="<%= moment(value).format(format) %>" name="<%= accessor %>[date]" placeholder="06.01.2013" data-date-format="<%= format.toLowerCase() %>">
+              <span class="add-on"><i class="icon-th"></i></span>
+            </div>
+            <input class="datetime" type="number" name="<%= accessor %>[hour]"    value="<%= moment(value).format('HH') %>" placeholder="19">
+            <input class="datetime" type="number" name="<%= accessor %>[minutes]" value="<%= moment(value).format('mm') %>" placeholder="31">
+            <input class="datetime" type="number" name="<%= accessor %>[seconds]" value="<%= moment(value).format('ss') %>" placeholder="00">
+          <% } else if (dataType.toLowerCase().indexOf('text') !== -1) { %>
+            <textarea name="<%= accessor %>"><%= value %></textarea>
+          <% } else { %>
+            Whoops. I forgot this data type. Please open an issue at Github :)<br>
+            Missing dataType: <%= dataType %>
+          <% } %>
+        </div>
+      </div>
+    <% } %>
+  </form>
+</div>
+<div class="modal-footer">
+  <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+  <button class="btn btn-primary">Save new <%= model.get('name') %></button>
+</div>

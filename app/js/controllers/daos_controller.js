@@ -19,10 +19,9 @@ define([
     title: 'DAOs',
 
     index: function(params) {
-      new DaoFactoriesController().index(params);
-      new DaoCollection({
-        tableName: params.daoFactory
-      }).fetch({
+      new DaoFactoriesController().index(params)
+
+      new DaoCollection({ tableName: params.daoFactory }).fetch({
         success: function(daoCollection) {
           this.view = new IndexView({
             tableName:      daoCollection.tableName,
@@ -38,9 +37,22 @@ define([
         success: function(daoFactory) {
           new Dao({ id: params.id, tableName: daoFactory.get('tableName') }).fetch({
             success: function(dao) {
-              console.log('dao factory', daoFactory)
-              console.log('dao', dao)
+              this.view = new EditView({
+                daoFactory:     daoFactory,
+                dao:            dao,
+                attributeNames: dao.getSortedAttributes()
+              })
+            }.bind(this)
+          })
+        }.bind(this)
+      })
+    },
 
+    destroy: function(params) {
+      new DaoFactory({ tableName: params.tableName }).fetch({
+        success: function(daoFactory) {
+          new Dao({ id: params.id, tableName: daoFactory.get('tableName') }).fetch({
+            success: function(dao) {
               this.view = new EditView({
                 daoFactory:     daoFactory,
                 dao:            dao,
