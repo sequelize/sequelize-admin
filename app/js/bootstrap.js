@@ -26,7 +26,7 @@ $(function() {
         exports: '_'
       },
       backbone: {
-        deps:    ['underscore', 'jquery'],
+        deps:    ['underscore', 'jquery', 'vendor/jquery.serializeJSON.min'],
         exports: 'Backbone'
       },
       handlebars: {

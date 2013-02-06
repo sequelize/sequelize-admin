@@ -9,9 +9,23 @@ define([
 
   return View.extend({
     template:   template,
-    className:  'daos edit',
+    className:  'dao_factories new',
     autoRender: true,
     container:  '.modal',
+
+    events: {
+      'click .modal-footer .btn-primary': function(e) {
+        e.preventDefault()
+
+        var params = this.$el.find('form').serializeJSON()
+
+        require(['controllers/daos_controller'], function(DaosController) {
+          new DaosController().create($.extend({
+            tableName: this.model.get('tableName')
+          }, params))
+        }.bind(this))
+      }
+    },
 
     render: function() {
       if ($('.modal').length === 0) {

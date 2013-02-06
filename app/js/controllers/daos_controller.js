@@ -48,6 +48,18 @@ define([
       })
     },
 
+    create: function(params) {
+      new Dao(params).save({
+        success: function() {
+          console.log(arguments)
+        }.bind(this),
+
+        error: function() {
+          console.log(arguments)
+        }.bind(this)
+      })
+    },
+
     destroy: function(params) {
       new DaoFactory({ tableName: params.tableName }).fetch({
         success: function(daoFactory) {
