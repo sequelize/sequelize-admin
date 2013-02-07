@@ -7,8 +7,13 @@ define([
   // 'use strict';
 
   var DaoFactory = Model.extend({
-    initialize: function(attributes) {
-      this.url = this.endpoint + '/api/' + attributes.tableName
+    endpoints: {
+      'read': {
+        type: 'head',
+        url:  function(daoFactory) {
+          return daoFactory.endpoint + '/api/' + daoFactory.get('tableName')
+        }
+      }
     },
 
     getPath: function() {
@@ -17,11 +22,6 @@ define([
 
     isActive: function(selectedTableName) {
       return this.get('tableName') === selectedTableName
-    },
-
-    sync: function(method, model, options) {
-      options.type = 'HEAD'
-      return Backbone.sync(method, model, options)
     }
   })
 

@@ -21,12 +21,16 @@ define([
     index: function(params) {
       new DaoFactoriesController().index(params)
 
-      new DaoCollection({ tableName: params.daoFactory }).fetch({
-        success: function(daoCollection) {
-          this.view = new IndexView({
-            tableName:      daoCollection.tableName,
-            attributeNames: daoCollection.models[0].getSortedAttributes(),
-            daos:           daoCollection.models
+      new DaoFactory({ tableName: params.daoFactory }).fetch({
+        success: function(daoFactory) {
+          new DaoCollection({ daoFactory: daoFactory }).fetch({
+            success: function(daoCollection) {
+              this.view = new IndexView({
+                tableName:      daoCollection.tableName,
+                attributeNames: daoCollection.models[0].getSortedAttributes(),
+                daos:           daoCollection.models
+              })
+            }.bind(this)
           })
         }.bind(this)
       })

@@ -5,8 +5,32 @@ define([
   'use strict';
 
   var Dao = Model.extend({
+    endpoints: {
+      'read': {
+        url: function(dao) {
+          return dao.endpoint + '/api/' + dao.get('tableName') + '/' + dao.get('id')
+        }
+      },
+
+      create: {
+        type: 'post',
+        url: function(dao) {
+          return dao.endpoint + '/api/' + dao.get('tableName')
+        },
+        data: function(dao) {
+          var key = Object.keys(dao.attributes).filter(function(a) { return a !== 'tableName'})[0]
+          return dao.get(dataKey)
+        }
+      }
+    },
+
     initialize: function(attributes) {
-      this.url = this.endpoint + '/api/' + attributes.tableName + '/' + attributes.id
+      if (!attributes.hasOwnProperty('daoFactory')) {
+        throw new Error('Please provide the respective DaoFactory for this Dao!')
+      }
+
+      this.daoFactory = attributes.daoFactory
+      delete attributes.daoFactory
     },
 
     getSortedAttributes: function() {

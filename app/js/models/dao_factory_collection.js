@@ -10,6 +10,12 @@ define([
 
     initialize: function(attributes) {
       this.url = this.endpoint + '/api'
+    },
+
+    parse: function(response) {
+      return response.data.map(function(data) {
+        return new this.model(data)
+      }.bind(this))
     }
   })
 

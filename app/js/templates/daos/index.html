@@ -9,14 +9,18 @@
 <table class="table table-striped table-bordered">
   <tr>
     <% attributeNames.forEach(function(key) { %>
-      <th><%= key %></th>
+      <% if (key !== 'daoFactory') { %>
+        <th><%= key %></th>
+      <% } %>
     <% }) %>
     <th>Actions</th>
   </tr>
   <% daos.forEach(function(dao) { %>
     <tr data-id="<%= dao.id %>" data-table-name="<%= tableName %>">
       <% attributeNames.forEach(function(key) { %>
-        <td><%= dao.get(key) %></td>
+        <% if (key !== 'daoFactory') { %>
+          <td><%= dao.get(key) %></td>
+        <% } %>
       <% }) %>
       <td width="80" class="actions">
         <span class="edit"><i class="icon-edit"></i> Edit</span>
