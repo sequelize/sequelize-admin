@@ -6,12 +6,18 @@ define([
   'models/dao_collection',
   'models/dao_factory',
   'views/daos/index',
-  'views/daos/edit'
+  'views/daos/edit',
+  'jquery'
 ], function(
   _,
-  Controller, DaoFactoriesController,
-  Dao, DaoCollection, DaoFactory,
-  IndexView, EditView
+  Controller,
+  DaoFactoriesController,
+  Dao,
+  DaoCollection,
+  DaoFactory,
+  IndexView,
+  EditView,
+  $
 ) {
   'use strict';
 
@@ -37,29 +43,29 @@ define([
     },
 
     edit: function(params) {
-      new DaoFactory({ tableName: params.tableName }).fetch({
-        success: function(daoFactory) {
-          new Dao({ id: params.id, tableName: daoFactory.get('tableName') }).fetch({
-            success: function(dao) {
-              this.view = new EditView({
-                daoFactory:     daoFactory,
-                dao:            dao,
-                attributeNames: dao.getSortedAttributes()
-              })
-            }.bind(this)
+      new Dao({ id: params.id, tableName: params.tableName }).fetch({
+        success: function(dao) {
+          this.view = new EditView({
+            daoFactory:     dao.daoFactory,
+            dao:            dao,
+            attributeNames: dao.getSortedAttributes()
           })
         }.bind(this)
       })
     },
 
     create: function(params) {
-      new Dao(params).save({
-        success: function() {
-          console.log(arguments)
-        }.bind(this),
+      new DaoFactory({ tableName: params.tableName }).fetch({
+        success: function(daoFactory) {
+          new Dao($.extend({ daoFactory: daoFactory }, params)).save({
+            success: function() {
+              console.log(arguments)
+            }.bind(this),
 
-        error: function() {
-          console.log(arguments)
+            error: function() {
+              console.log(arguments)
+            }.bind(this)
+          })
         }.bind(this)
       })
     },

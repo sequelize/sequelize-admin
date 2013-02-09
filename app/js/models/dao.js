@@ -1,36 +1,46 @@
 define([
   'chaplin',
-  'models/base/model'
-], function(Chaplin, Model) {
+  'models/base/model',
+  'models/dao_factory'
+], function(Chaplin, Model, DaoFactory) {
   'use strict';
 
   var Dao = Model.extend({
     endpoints: {
-      'read': {
+      read: {
         url: function(dao) {
-          return dao.endpoint + '/api/' + dao.get('tableName') + '/' + dao.get('id')
+          return dao.endpoint + '/api/' + dao.daoFactory.get('tableName') + '/' + dao.get('id')
         }
       },
 
       create: {
         type: 'post',
+
         url: function(dao) {
-          return dao.endpoint + '/api/' + dao.get('tableName')
+          return dao.endpoint + '/api/' + dao.daoFactory.get('tableName')
         },
+
         data: function(dao) {
           var key = Object.keys(dao.attributes).filter(function(a) { return a !== 'tableName'})[0]
-          return dao.get(dataKey)
+          return dao.get(key)
         }
       }
     },
 
-    initialize: function(attributes) {
-      if (!attributes.hasOwnProperty('daoFactory')) {
-        throw new Error('Please provide the respective DaoFactory for this Dao!')
+    fetch: function(options) {
+      var args = arguments
+      if (this.daoFactory) {
+        Model.prototype.fetch.apply(this, arguments)
+        this.constructor.__super__.fetch.apply(this, args)
+      } else {
+        new DaoFactory({ tableName: this.get('tableName') }).fetch({
+          success: function(daoFactory) {
+            this.daoFactory = daoFactory
+            delete this.attributes.tableName
+            Model.prototype.fetch.apply(this, args)
+          }.bind(this)
+        })
       }
-
-      this.daoFactory = attributes.daoFactory
-      delete attributes.daoFactory
     },
 
     getSortedAttributes: function() {
