@@ -31,7 +31,6 @@ define([
       var args = arguments
       if (this.daoFactory) {
         Model.prototype.fetch.apply(this, arguments)
-        this.constructor.__super__.fetch.apply(this, args)
       } else {
         new DaoFactory({ tableName: this.get('tableName') }).fetch({
           success: function(daoFactory) {
