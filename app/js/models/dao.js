@@ -1,8 +1,9 @@
 define([
   'chaplin',
   'models/base/model',
-  'models/dao_factory'
-], function(Chaplin, Model, DaoFactory) {
+  'models/dao_factory',
+  'moment'
+], function(Chaplin, Model, DaoFactory, moment) {
   'use strict';
 
   var Dao = Model.extend({
@@ -22,7 +23,7 @@ define([
           var result = {}
 
           for (var attribute in dao.get('daoFactory').get('attributes')) {
-            if (dao.get('daoFactory').get('attributes').hasOwnProperty(attribute)) {
+            if (dao.get('daoFactory').get('attributes').hasOwnProperty(attribute) && dao.attributes.hasOwnProperty(attribute)) {
               result[attribute] = dao.get(attribute)
             }
           }
@@ -43,7 +44,7 @@ define([
       // }
     },
 
-    fetch: function(options) {
+    fetch: function() {
       var args = arguments
 
       this.loadDaoFactory(function() {
@@ -51,13 +52,14 @@ define([
       }.bind(this))
     },
 
-    save: function(options) {
+    save: function() {
       var args = arguments
 
       this.loadDaoFactory(function() {
         var attributes = this.get('daoFactory').get('attributes')
+          , attribute  = null
 
-        for (var attribute in attributes) {
+        for (attribute in attributes) {
           if (attributes.hasOwnProperty(attribute)) {
             var spec                = (typeof attributes[attribute] === 'object') ? attributes[attribute] : { type: attributes[attribute] }
               , isDate              = (spec.type.toLowerCase().indexOf('datetime') !== -1)
@@ -73,16 +75,26 @@ define([
                 ].join(":")
               ].join(" ")
 
-              this.set(attribute, moment(dateAsString).toDate())
+              this.set(attribute, moment(dateAsString).format('YYYY-DD-MM HH:mm:ss'))
             }
           }
         }
 
-        if (this.get('id') === '') {
-          delete this.attributes.id
-          delete this.id
+        for (attribute in this.attributes) {
+          if (this.attributes.hasOwnProperty(attribute)) {
+            if (this.attributes[attribute] === '') {
+              debugger
+              (function(attribute) {
+                this.unset(attribute)
+              }.bind(this))(attribute)
+
+              if (attribute === 'id') {
+               delete this.id
+              }
+            }
+          }
         }
-console.log(args)
+
         Model.prototype.save.apply(this, args)
       }.bind(this))
     },
