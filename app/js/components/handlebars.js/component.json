@@ -1,0 +1,8 @@
+{
+  "name": "handlebars.js",
+  "version": "1.0.8",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/wycats/handlebars.js.git"
+  }
+}

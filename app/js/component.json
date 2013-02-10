@@ -1,0 +1,16 @@
+{
+  "name": "js",
+  "version": "0.0.0",
+  "dependencies": {
+    "jquery": "~1.9.1",
+    "chaplin": "~0.6.1",
+    "bootstrap": "~2.3.0",
+    "bootstrap-datepicker": "latest",
+    "handlebars.js": "~1.0.8",
+    "jquery-serialize-object": "~1.0.0",
+    "moment": "~2.0.0",
+    "requirejs": "~2.1.4",
+    "requirejs-text": "~2.0.5",
+    "lodash": "~1.0.0-rc.3"
+  }
+}
