@@ -1,7 +1,7 @@
 {
   "name": "bootstrap",
   "description": "AMD version of Twitter Bootstrap JavaScript modules. Converted with bootstrap-amd npm package.",
-  "version": "2.3.0",
+  "version": "2.2.2",
   "keywords": [
     "bootstrap",
     "twitter",

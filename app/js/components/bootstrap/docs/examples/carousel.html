@@ -68,7 +68,7 @@
 
 
 
-    /* CUSTOMIZE THE CAROUSEL
+    /* CUSTOMIZE THE NAVBAR
     -------------------------------------------------- */
 
     /* Carousel base class */
@@ -78,7 +78,7 @@
 
     .carousel .container {
       position: relative;
-      z-index: 9;
+      z-index: 10;
     }
 
     .carousel-control {
@@ -88,7 +88,6 @@
       text-shadow: 0 1px 1px rgba(0,0,0,.4);
       background-color: transparent;
       border: 0;
-      z-index: 10;
     }
 
     .carousel .item {
@@ -255,7 +254,7 @@
 
     <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
     <!--[if lt IE 9]>
-      <script src="../assets/js/html5shiv.js"></script>
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
 
     <!-- Fav and touch icons -->
@@ -279,11 +278,11 @@
         <div class="navbar navbar-inverse">
           <div class="navbar-inner">
             <!-- Responsive Navbar Part 1: Button for triggering responsive navbar (not covered in tutorial). Include responsive CSS to utilize. -->
-            <button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+            <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
               <span class="icon-bar"></span>
               <span class="icon-bar"></span>
               <span class="icon-bar"></span>
-            </button>
+            </a>
             <a class="brand" href="#">Project name</a>
             <!-- Responsive Navbar Part 2: Place all navbar contents you want collapsed withing .navbar-collapse.collapse. -->
             <div class="nav-collapse collapse">
@@ -418,7 +417,7 @@
       <!-- FOOTER -->
       <footer>
         <p class="pull-right"><a href="#">Back to top</a></p>
-        <p>&copy; 2013 Company, Inc. &middot; <a href="#">Privacy</a> &middot; <a href="#">Terms</a></p>
+        <p>&copy; 2012 Company, Inc. &middot; <a href="#">Privacy</a> &middot; <a href="#">Terms</a></p>
       </footer>
 
     </div><!-- /.container -->
@@ -449,6 +448,5 @@
         })
       }(window.jQuery)
     </script>
-    <script src="../assets/js/holder/holder.js"></script>
   </body>
 </html>

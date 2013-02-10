@@ -1,6 +1,6 @@
 define([ 'jquery', './transition' ], function ( jQuery ) {
 /* ============================================================
- * bootstrap-button.js v2.3.0
+ * bootstrap-button.js v2.2.2
  * http://twitter.github.com/bootstrap/javascript.html#buttons
  * ============================================================
  * Copyright 2012 Twitter, Inc.

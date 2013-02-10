@@ -14,14 +14,12 @@
     })
 
     // side bar
-    setTimeout(function () {
-      $('.bs-docs-sidenav').affix({
-        offset: {
-          top: function () { return $window.width() <= 980 ? 290 : 210 }
-        , bottom: 270
-        }
-      })
-    }, 100)
+    $('.bs-docs-sidenav').affix({
+      offset: {
+        top: function () { return $window.width() <= 980 ? 290 : 210 }
+      , bottom: 270
+      }
+    })
 
     // make code pretty
     window.prettyPrint && prettyPrint()
@@ -36,21 +34,21 @@
     // add tipsies to grid for scaffolding
     if ($('#gridSystem').length) {
       $('#gridSystem').tooltip({
-          selector: '.show-grid > [class*="span"]'
+          selector: '.show-grid > div'
         , title: function () { return $(this).width() + 'px' }
       })
     }
 
     // tooltip demo
     $('.tooltip-demo').tooltip({
-      selector: "a[data-toggle=tooltip]"
+      selector: "a[rel=tooltip]"
     })
 
     $('.tooltip-test').tooltip()
     $('.popover-test').popover()
 
     // popover demo
-    $("a[data-toggle=popover]")
+    $("a[rel=popover]")
       .popover()
       .click(function(e) {
         e.preventDefault()

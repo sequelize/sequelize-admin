@@ -1,6 +1,6 @@
 define([ 'jquery', './transition' ], function ( jQuery ) {
 /* ========================================================
- * bootstrap-tab.js v2.3.0
+ * bootstrap-tab.js v2.2.2
  * http://twitter.github.com/bootstrap/javascript.html#tabs
  * ========================================================
  * Copyright 2012 Twitter, Inc.
