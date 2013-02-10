@@ -35,17 +35,15 @@
         exports: '_'
       },
       backbone: {
-        deps:    [
+        deps: [
           'underscore',
-          'jquery',
-          'components/jquery-serialize-object/jquery.serialize-object'
+          'jquery'
         ],
         exports: 'Backbone'
       },
       handlebars: {
         exports: 'Handlebars'
       },
-
       datepicker: {
         deps:    ['jquery', 'bootstrap', 'moment'],
         exports: '$.fn.datepicker'
@@ -59,6 +57,5 @@
 
   require([ 'bootstrap', 'sequelize_admin' ], function(Bootstrap, SequelizeAdmin) {
     new SequelizeAdmin({ title: 'fnord' }).initialize()
-    // app.initialize()
   })
 })()
