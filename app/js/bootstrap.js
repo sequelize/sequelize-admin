@@ -1,5 +1,14 @@
-$(function() {
-  var endpoint = $('[data-endpoint]').data('endpoint')
+// $(function() {
+  var endpoint = null
+    , scripts = document.querySelectorAll("body script")
+
+  for (var i = 0; i < scripts.length; i++) {
+    var script = scripts[i]
+
+    if (script.src.indexOf('app/js/bootstrap.js') !== -1) {
+      endpoint = script.getAttribute('data-endpoint')
+    }
+  }
 
   // Configure the AMD module loader
   requirejs.config({
@@ -11,7 +20,7 @@ $(function() {
       backbone:   'vendor/backbone-0.9.2',
       chaplin:    'vendor/chaplin-1.0.0-pre-59cac06',
       handlebars: 'vendor/handlebars-1.0.rc.1',
-      jquery:     'vendor/jquery-1.8.2',
+      jquery:     'vendor/jquery-1.9.1.min',
       text:       'vendor/require-text-2.0.3',
       underscore: 'vendor/underscore-1.4.2',
       bootstrap:  'vendor/bootstrap/main',
@@ -52,4 +61,4 @@ $(function() {
     var app = new SequelizeAdmin({ title: 'fnord' })
     app.initialize()
   })
-})
+// })
