@@ -6,10 +6,12 @@
 </div>
 <div class="modal-body">
   <form class="form-horizontal">
+    <input type="hidden" name="daoFactory[tableName]" value="<%= model.get('tableName') %>">
+
     <% for (var key in model.get('attributes')) { %>
       <%
         var dataType = model.get('attributes')[key]
-          , accessor = model.get('name') + "[" + key + "]"
+          , accessor = key
           , value    = 'Asd'
 
         if (typeof dataType === 'object') {
@@ -50,5 +52,5 @@
 </div>
 <div class="modal-footer">
   <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
-  <button class="btn btn-primary">Save new <%= model.get('name') %></button>
+  <input type="submit" class="btn btn-primary" value="Save new <%= model.get('name') %>">
 </div>

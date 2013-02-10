@@ -14,17 +14,22 @@ define([
     container:  '.modal',
 
     events: {
-      'click .modal-footer .btn-primary': function(e) {
-        e.preventDefault()
+      'keydown .modal-body form input': function(e) {
+        if (event.keyCode === 13) {
+          this.submitForm(e)
+        }
+      },
+      'submit .modal-body form': 'submitForm'
+    },
 
-        var params = this.$el.find('form').serializeJSON()
+    submitForm: function(e) {
+      e.preventDefault()
 
-        require(['controllers/daos_controller'], function(DaosController) {
-          new DaosController().create($.extend({
-            tableName: this.model.get('tableName')
-          }, params))
-        }.bind(this))
-      }
+      var params = this.$el.find('form').serializeJSON()
+
+      require(['controllers/daos_controller'], function(DaosController) {
+        new DaosController().create(params)
+      }.bind(this))
     },
 
     render: function() {
@@ -44,7 +49,7 @@ define([
           $('.date').datepicker()
 
           setTimeout(function() {
-            this.$el.find('input')[0].focus()
+            this.$el.find('input[type != "hidden"]')[0].focus()
           }.bind(this), 100)
         }.bind(this))
         .on('hidden', function() { $('.modal').remove() })

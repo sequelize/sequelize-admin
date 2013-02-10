@@ -43,10 +43,10 @@ define([
     },
 
     edit: function(params) {
-      new Dao({ id: params.id, tableName: params.tableName }).fetch({
+      new Dao({ id: params.id, daoFactory: { tableName: params.tableName } }).fetch({
         success: function(dao) {
           this.view = new EditView({
-            daoFactory:     dao.daoFactory,
+            daoFactory:     dao.get('daoFactory'),
             dao:            dao,
             attributeNames: dao.getSortedAttributes()
           })
@@ -55,32 +55,26 @@ define([
     },
 
     create: function(params) {
-      new DaoFactory({ tableName: params.tableName }).fetch({
-        success: function(daoFactory) {
-          new Dao($.extend({ daoFactory: daoFactory }, params)).save({
-            success: function() {
-              console.log(arguments)
-            }.bind(this),
+      console.log(params)
 
-            error: function() {
-              console.log(arguments)
-            }.bind(this)
-          })
+      new Dao(params).save({
+        success: function() {
+          console.log(arguments)
+        }.bind(this),
+
+        error: function() {
+          console.log(arguments)
         }.bind(this)
       })
     },
 
     destroy: function(params) {
-      new DaoFactory({ tableName: params.tableName }).fetch({
-        success: function(daoFactory) {
-          new Dao({ id: params.id, tableName: daoFactory.get('tableName') }).fetch({
-            success: function(dao) {
-              this.view = new EditView({
-                daoFactory:     daoFactory,
-                dao:            dao,
-                attributeNames: dao.getSortedAttributes()
-              })
-            }.bind(this)
+      new Dao({ id: params.id, tableName: params.tableName }).fetch({
+        success: function(dao) {
+          this.view = new EditView({
+            daoFactory:     dao.daoFactory,
+            dao:            dao,
+            attributeNames: dao.getSortedAttributes()
           })
         }.bind(this)
       })
