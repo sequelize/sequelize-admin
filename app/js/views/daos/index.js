@@ -13,9 +13,9 @@ define([
 
     events: {
       "click .dao-factory-actions .new": function(e) {
-        require(['controllers/dao_factories_controller'], function(DaoFactoriesController) {
+        require(['controllers/daos_controller'], function(DaosController) {
           var tableName = $(e.target).parent().data('table-name')
-          new DaoFactoriesController()['new']({ tableName: tableName })
+          new DaosController()['new']({ tableName: tableName })
         }.bind(this))
       },
 

@@ -6,6 +6,7 @@ define([
   'models/dao_collection',
   'models/dao_factory',
   'views/daos/index',
+  'views/daos/new',
   'views/daos/edit',
   'jquery'
 ], function(
@@ -16,6 +17,7 @@ define([
   DaoCollection,
   DaoFactory,
   IndexView,
+  NewView,
   EditView,
   $
 ) {
@@ -32,7 +34,7 @@ define([
           new DaoCollection({ daoFactory: daoFactory }).fetch({
             success: function(daoCollection) {
               this.view = new IndexView({
-                tableName:      daoCollection.tableName,
+                tableName:      daoFactory.get('tableName'),
                 attributeNames: daoCollection.models[0].getSortedAttributes(),
                 daos:           daoCollection.models
               })
@@ -54,15 +56,27 @@ define([
       })
     },
 
-    create: function(params) {
-      console.log(params)
-
-      new Dao(params).save({
-        success: function() {
-          console.log(arguments)
+    'new': function(params) {
+      new DaoFactory(params).fetch({
+        success: function(daoFactory) {
+          new NewView({ model: daoFactory })
         }.bind(this),
 
         error: function() {
+
+        }.bind(this)
+      })
+    },
+
+    create: function(params) {
+      new Dao(params).save({}, {
+        success: function() {
+          console.log('asdasd')
+          $('.modal').modal('hide')
+        }.bind(this),
+
+        error: function() {
+          alert('something is broken!')
           console.log(arguments)
         }.bind(this)
       })
