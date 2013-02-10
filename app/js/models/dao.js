@@ -83,10 +83,7 @@ define([
         for (attribute in this.attributes) {
           if (this.attributes.hasOwnProperty(attribute)) {
             if (this.attributes[attribute] === '') {
-              debugger
-              (function(attribute) {
-                this.unset(attribute)
-              }.bind(this))(attribute)
+              this.unset(attribute)
 
               if (attribute === 'id') {
                delete this.id
