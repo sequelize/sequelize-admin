@@ -1,4 +1,4 @@
-// $(function() {
+(function() {
   var endpoint = null
     , scripts = document.querySelectorAll("body script")
 
@@ -17,15 +17,15 @@
 
     // Specify the paths of vendor libraries
     paths: {
-      backbone:   'vendor/backbone-0.9.2',
-      chaplin:    'vendor/chaplin-1.0.0-pre-59cac06',
-      handlebars: 'vendor/handlebars-1.0.rc.1',
-      jquery:     'vendor/jquery-1.9.1.min',
-      text:       'vendor/require-text-2.0.3',
-      underscore: 'vendor/underscore-1.4.2',
-      bootstrap:  'vendor/bootstrap/main',
-      datepicker: 'vendor/bootstrap-datepicker',
-      moment:     'vendor/moment.min'
+      backbone:   'components/backbone/backbone-min',
+      chaplin:    'components/chaplin/amd/chaplin.min',
+      handlebars: 'components/handlebars.js/dist/handlebars',
+      jquery:     'components/jquery/jquery.min',
+      text:       'components/requirejs-text/text',
+      underscore: 'components/lodash/lodash.underscore.min',
+      bootstrap:  'components/bootstrap/amd/main',
+      datepicker: 'components/bootstrap-datepicker/js/bootstrap-datepicker',
+      moment:     'components/moment/min/moment.min'
     },
 
     // Underscore and Backbone are not AMD-capable per default,
@@ -38,7 +38,7 @@
         deps:    [
           'underscore',
           'jquery',
-          'vendor/jquery.serializeJSON.min'
+          'components/jquery-serialize-object/jquery.serialize-object'
         ],
         exports: 'Backbone'
       },
@@ -58,7 +58,7 @@
   })
 
   require([ 'bootstrap', 'sequelize_admin' ], function(Bootstrap, SequelizeAdmin) {
-    var app = new SequelizeAdmin({ title: 'fnord' })
-    app.initialize()
+    new SequelizeAdmin({ title: 'fnord' }).initialize()
+    // app.initialize()
   })
-// })
+})()
