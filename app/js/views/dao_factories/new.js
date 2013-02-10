@@ -19,7 +19,8 @@ define([
           this.submitForm(e)
         }
       },
-      'submit .modal-body form': 'submitForm'
+      'submit .modal-body form': 'submitForm',
+      'click .modal-footer .btn-primary': 'submitForm'
     },
 
     submitForm: function(e) {
