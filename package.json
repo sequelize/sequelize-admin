@@ -5,7 +5,7 @@
   "main": "lib/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "update-bootstrap": "mkdir tmp && cd tmp && git clone git://github.com/twitter/bootstrap.git && cd bootstrap && git co v`node -e \"console.log(require('./package.json').version)\"` && cd ../../ && node_modules/.bin/bootstrap-amd tmp/bootstrap && rm -rf app/js/vendor/bootstrap/* && cp -rf tmp/bootstrap/amd/* app/js/vendor/bootstrap && rm -rf tmp"
+    "amdify-bootstrap": "node_modules/.bin/bootstrap-amd app/js/components/bootstrap"
   },
   "repository": {
     "type": "git",
