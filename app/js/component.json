@@ -4,7 +4,7 @@
   "dependencies": {
     "jquery": "~1.9.1",
     "chaplin": "~0.6.1",
-    "bootstrap": "~2.3.0",
+    "bootstrap": "git://github.com/sdepold/bootstrap.git#~2.3.1",
     "bootstrap-datepicker": "latest",
     "handlebars.js": "~1.0.8",
     "jquery-serialize-object": "~1.0.0",
