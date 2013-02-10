@@ -1,6 +1,6 @@
 define([ 'jquery', './transition' ], function ( jQuery ) {
 /* ============================================================
- * bootstrap-button.js v2.2.1
+ * bootstrap-button.js v2.3.0
  * http://twitter.github.com/bootstrap/javascript.html#buttons
  * ============================================================
  * Copyright 2012 Twitter, Inc.
@@ -65,6 +65,8 @@ define([ 'jquery', './transition' ], function ( jQuery ) {
  /* BUTTON PLUGIN DEFINITION
   * ======================== */
 
+  var old = $.fn.button
+
   $.fn.button = function (option) {
     return this.each(function () {
       var $this = $(this)
@@ -81,6 +83,15 @@ define([ 'jquery', './transition' ], function ( jQuery ) {
   }
 
   $.fn.button.Constructor = Button
+
+
+ /* BUTTON NO CONFLICT
+  * ================== */
+
+  $.fn.button.noConflict = function () {
+    $.fn.button = old
+    return this
+  }
 
 
  /* BUTTON DATA-API

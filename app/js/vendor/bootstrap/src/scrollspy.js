@@ -1,6 +1,6 @@
 define([ 'jquery', './transition' ], function ( jQuery ) {
 /* =============================================================
- * bootstrap-scrollspy.js v2.2.1
+ * bootstrap-scrollspy.js v2.3.0
  * http://twitter.github.com/bootstrap/javascript.html#scrollspy
  * =============================================================
  * Copyright 2012 Twitter, Inc.
@@ -60,7 +60,7 @@ define([ 'jquery', './transition' ], function ( jQuery ) {
               , $href = /^#\w/.test(href) && $(href)
             return ( $href
               && $href.length
-              && [[ $href.position().top, href ]] ) || null
+              && [[ $href.position().top + (!$.isWindow(self.$scrollElement.get(0)) && self.$scrollElement.scrollTop()), href ]] ) || null
           })
           .sort(function (a, b) { return a[0] - b[0] })
           .each(function () {
@@ -122,6 +122,8 @@ define([ 'jquery', './transition' ], function ( jQuery ) {
  /* SCROLLSPY PLUGIN DEFINITION
   * =========================== */
 
+  var old = $.fn.scrollspy
+
   $.fn.scrollspy = function (option) {
     return this.each(function () {
       var $this = $(this)
@@ -136,6 +138,15 @@ define([ 'jquery', './transition' ], function ( jQuery ) {
 
   $.fn.scrollspy.defaults = {
     offset: 10
+  }
+
+
+ /* SCROLLSPY NO CONFLICT
+  * ===================== */
+
+  $.fn.scrollspy.noConflict = function () {
+    $.fn.scrollspy = old
+    return this
   }
 
 

@@ -1,6 +1,6 @@
 define([ 'jquery', './transition' ], function ( jQuery ) {
 /* =============================================================
- * bootstrap-typeahead.js v2.2.1
+ * bootstrap-typeahead.js v2.3.0
  * http://twitter.github.com/bootstrap/javascript.html#typeahead
  * =============================================================
  * Copyright 2012 Twitter, Inc.
@@ -34,8 +34,8 @@ define([ 'jquery', './transition' ], function ( jQuery ) {
     this.sorter = this.options.sorter || this.sorter
     this.highlighter = this.options.highlighter || this.highlighter
     this.updater = this.options.updater || this.updater
-    this.$menu = $(this.options.menu).appendTo('body')
     this.source = this.options.source
+    this.$menu = $(this.options.menu)
     this.shown = false
     this.listen()
   }
@@ -57,16 +57,18 @@ define([ 'jquery', './transition' ], function ( jQuery ) {
     }
 
   , show: function () {
-      var pos = $.extend({}, this.$element.offset(), {
+      var pos = $.extend({}, this.$element.position(), {
         height: this.$element[0].offsetHeight
       })
 
-      this.$menu.css({
-        top: pos.top + pos.height
-      , left: pos.left
-      })
+      this.$menu
+        .insertAfter(this.$element)
+        .css({
+          top: pos.top + pos.height
+        , left: pos.left
+        })
+        .show()
 
-      this.$menu.show()
       this.shown = true
       return this
     }
@@ -171,6 +173,7 @@ define([ 'jquery', './transition' ], function ( jQuery ) {
 
   , listen: function () {
       this.$element
+        .on('focus',    $.proxy(this.focus, this))
         .on('blur',     $.proxy(this.blur, this))
         .on('keypress', $.proxy(this.keypress, this))
         .on('keyup',    $.proxy(this.keyup, this))
@@ -182,6 +185,7 @@ define([ 'jquery', './transition' ], function ( jQuery ) {
       this.$menu
         .on('click', $.proxy(this.click, this))
         .on('mouseenter', 'li', $.proxy(this.mouseenter, this))
+        .on('mouseleave', 'li', $.proxy(this.mouseleave, this))
     }
 
   , eventSupported: function(eventName) {
@@ -218,7 +222,7 @@ define([ 'jquery', './transition' ], function ( jQuery ) {
     }
 
   , keydown: function (e) {
-      this.suppressKeyPressRepeat = !~$.inArray(e.keyCode, [40,38,9,13,27])
+      this.suppressKeyPressRepeat = ~$.inArray(e.keyCode, [40,38,9,13,27])
       this.move(e)
     }
 
@@ -255,20 +259,31 @@ define([ 'jquery', './transition' ], function ( jQuery ) {
       e.preventDefault()
   }
 
+  , focus: function (e) {
+      this.focused = true
+    }
+
   , blur: function (e) {
-      var that = this
-      setTimeout(function () { that.hide() }, 150)
+      this.focused = false
+      if (!this.mousedover && this.shown) this.hide()
     }
 
   , click: function (e) {
       e.stopPropagation()
       e.preventDefault()
       this.select()
+      this.$element.focus()
     }
 
   , mouseenter: function (e) {
+      this.mousedover = true
       this.$menu.find('.active').removeClass('active')
       $(e.currentTarget).addClass('active')
+    }
+
+  , mouseleave: function (e) {
+      this.mousedover = false
+      if (!this.focused && this.shown) this.hide()
     }
 
   }
@@ -276,6 +291,8 @@ define([ 'jquery', './transition' ], function ( jQuery ) {
 
   /* TYPEAHEAD PLUGIN DEFINITION
    * =========================== */
+
+  var old = $.fn.typeahead
 
   $.fn.typeahead = function (option) {
     return this.each(function () {
@@ -298,13 +315,21 @@ define([ 'jquery', './transition' ], function ( jQuery ) {
   $.fn.typeahead.Constructor = Typeahead
 
 
- /*   TYPEAHEAD DATA-API
+ /* TYPEAHEAD NO CONFLICT
+  * =================== */
+
+  $.fn.typeahead.noConflict = function () {
+    $.fn.typeahead = old
+    return this
+  }
+
+
+ /* TYPEAHEAD DATA-API
   * ================== */
 
   $(document).on('focus.typeahead.data-api', '[data-provide="typeahead"]', function (e) {
     var $this = $(this)
     if ($this.data('typeahead')) return
-    e.preventDefault()
     $this.typeahead($this.data())
   })
 

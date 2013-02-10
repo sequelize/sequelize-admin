@@ -1,6 +1,6 @@
 define([ 'jquery', './transition' ], function ( jQuery ) {
 /* ===========================================================
- * bootstrap-tooltip.js v2.2.1
+ * bootstrap-tooltip.js v2.3.0
  * http://twitter.github.com/bootstrap/javascript.html#tooltips
  * Inspired by the original jQuery.tipsy by Jason Frame
  * ===========================================================
@@ -39,19 +39,27 @@ define([ 'jquery', './transition' ], function ( jQuery ) {
   , init: function (type, element, options) {
       var eventIn
         , eventOut
+        , triggers
+        , trigger
+        , i
 
       this.type = type
       this.$element = $(element)
       this.options = this.getOptions(options)
       this.enabled = true
 
-      if (this.options.trigger == 'click') {
-        this.$element.on('click.' + this.type, this.options.selector, $.proxy(this.toggle, this))
-      } else if (this.options.trigger != 'manual') {
-        eventIn = this.options.trigger == 'hover' ? 'mouseenter' : 'focus'
-        eventOut = this.options.trigger == 'hover' ? 'mouseleave' : 'blur'
-        this.$element.on(eventIn + '.' + this.type, this.options.selector, $.proxy(this.enter, this))
-        this.$element.on(eventOut + '.' + this.type, this.options.selector, $.proxy(this.leave, this))
+      triggers = this.options.trigger.split(' ')
+
+      for (i = triggers.length; i--;) {
+        trigger = triggers[i]
+        if (trigger == 'click') {
+          this.$element.on('click.' + this.type, this.options.selector, $.proxy(this.toggle, this))
+        } else if (trigger != 'manual') {
+          eventIn = trigger == 'hover' ? 'mouseenter' : 'focus'
+          eventOut = trigger == 'hover' ? 'mouseleave' : 'blur'
+          this.$element.on(eventIn + '.' + this.type, this.options.selector, $.proxy(this.enter, this))
+          this.$element.on(eventOut + '.' + this.type, this.options.selector, $.proxy(this.leave, this))
+        }
       }
 
       this.options.selector ?
@@ -60,7 +68,7 @@ define([ 'jquery', './transition' ], function ( jQuery ) {
     }
 
   , getOptions: function (options) {
-      options = $.extend({}, $.fn[this.type].defaults, options, this.$element.data())
+      options = $.extend({}, $.fn[this.type].defaults, this.$element.data(), options)
 
       if (options.delay && typeof options.delay == 'number') {
         options.delay = {
@@ -98,14 +106,16 @@ define([ 'jquery', './transition' ], function ( jQuery ) {
 
   , show: function () {
       var $tip
-        , inside
         , pos
         , actualWidth
         , actualHeight
         , placement
         , tp
+        , e = $.Event('show')
 
       if (this.hasContent() && this.enabled) {
+        this.$element.trigger(e)
+        if (e.isDefaultPrevented()) return
         $tip = this.tip()
         this.setContent()
 
@@ -117,19 +127,18 @@ define([ 'jquery', './transition' ], function ( jQuery ) {
           this.options.placement.call(this, $tip[0], this.$element[0]) :
           this.options.placement
 
-        inside = /in/.test(placement)
-
         $tip
           .detach()
           .css({ top: 0, left: 0, display: 'block' })
-          .insertAfter(this.$element)
 
-        pos = this.getPosition(inside)
+        this.options.container ? $tip.appendTo(this.options.container) : $tip.insertAfter(this.$element)
+
+        pos = this.getPosition()
 
         actualWidth = $tip[0].offsetWidth
         actualHeight = $tip[0].offsetHeight
 
-        switch (inside ? placement.split(' ')[1] : placement) {
+        switch (placement) {
           case 'bottom':
             tp = {top: pos.top + pos.height, left: pos.left + pos.width / 2 - actualWidth / 2}
             break
@@ -144,11 +153,56 @@ define([ 'jquery', './transition' ], function ( jQuery ) {
             break
         }
 
-        $tip
-          .offset(tp)
-          .addClass(placement)
-          .addClass('in')
+        this.applyPlacement(tp, placement)
+        this.$element.trigger('shown')
       }
+    }
+
+  , applyPlacement: function(offset, placement){
+      var $tip = this.tip()
+        , width = $tip[0].offsetWidth
+        , height = $tip[0].offsetHeight
+        , actualWidth
+        , actualHeight
+        , delta
+        , replace
+
+      $tip
+        .offset(offset)
+        .addClass(placement)
+        .addClass('in')
+
+      actualWidth = $tip[0].offsetWidth
+      actualHeight = $tip[0].offsetHeight
+
+      if (placement == 'top' && actualHeight != height) {
+        offset.top = offset.top + height - actualHeight
+        replace = true
+      }
+
+      if (placement == 'bottom' || placement == 'top') {
+        delta = 0
+
+        if (offset.left < 0){
+          delta = offset.left * -2
+          offset.left = 0
+          $tip.offset(offset)
+          actualWidth = $tip[0].offsetWidth
+          actualHeight = $tip[0].offsetHeight
+        }
+
+        this.replaceArrow(delta - width + actualWidth, actualWidth, 'left')
+      } else {
+        this.replaceArrow(actualHeight - height, actualHeight, 'top')
+      }
+
+      if (replace) $tip.offset(offset)
+    }
+
+  , replaceArrow: function(delta, dimension, position){
+      this
+        .arrow()
+        .css(position, delta ? (50 * (1 - delta / dimension) + "%") : '')
     }
 
   , setContent: function () {
@@ -162,6 +216,10 @@ define([ 'jquery', './transition' ], function ( jQuery ) {
   , hide: function () {
       var that = this
         , $tip = this.tip()
+        , e = $.Event('hide')
+
+      this.$element.trigger(e)
+      if (e.isDefaultPrevented()) return
 
       $tip.removeClass('in')
 
@@ -180,13 +238,15 @@ define([ 'jquery', './transition' ], function ( jQuery ) {
         removeWithAnimation() :
         $tip.detach()
 
+      this.$element.trigger('hidden')
+
       return this
     }
 
   , fixTitle: function () {
       var $e = this.$element
       if ($e.attr('title') || typeof($e.attr('data-original-title')) != 'string') {
-        $e.attr('data-original-title', $e.attr('title') || '').removeAttr('title')
+        $e.attr('data-original-title', $e.attr('title') || '').attr('title', '')
       }
     }
 
@@ -194,11 +254,12 @@ define([ 'jquery', './transition' ], function ( jQuery ) {
       return this.getTitle()
     }
 
-  , getPosition: function (inside) {
-      return $.extend({}, (inside ? {top: 0, left: 0} : this.$element.offset()), {
-        width: this.$element[0].offsetWidth
-      , height: this.$element[0].offsetHeight
-      })
+  , getPosition: function () {
+      var el = this.$element[0]
+      return $.extend({}, (typeof el.getBoundingClientRect == 'function') ? el.getBoundingClientRect() : {
+        width: el.offsetWidth
+      , height: el.offsetHeight
+      }, this.$element.offset())
     }
 
   , getTitle: function () {
@@ -214,6 +275,10 @@ define([ 'jquery', './transition' ], function ( jQuery ) {
 
   , tip: function () {
       return this.$tip = this.$tip || $(this.options.template)
+    }
+
+  , arrow: function(){
+      return this.$arrow = this.$arrow || this.tip().find(".tooltip-arrow")
     }
 
   , validate: function () {
@@ -237,8 +302,8 @@ define([ 'jquery', './transition' ], function ( jQuery ) {
     }
 
   , toggle: function (e) {
-      var self = $(e.currentTarget)[this.type](this._options).data(this.type)
-      self[self.tip().hasClass('in') ? 'hide' : 'show']()
+      var self = e ? $(e.currentTarget)[this.type](this._options).data(this.type) : this
+      self.tip().hasClass('in') ? self.hide() : self.show()
     }
 
   , destroy: function () {
@@ -250,6 +315,8 @@ define([ 'jquery', './transition' ], function ( jQuery ) {
 
  /* TOOLTIP PLUGIN DEFINITION
   * ========================= */
+
+  var old = $.fn.tooltip
 
   $.fn.tooltip = function ( option ) {
     return this.each(function () {
@@ -268,11 +335,22 @@ define([ 'jquery', './transition' ], function ( jQuery ) {
   , placement: 'top'
   , selector: false
   , template: '<div class="tooltip"><div class="tooltip-arrow"></div><div class="tooltip-inner"></div></div>'
-  , trigger: 'hover'
+  , trigger: 'hover focus'
   , title: ''
   , delay: 0
   , html: false
+  , container: false
+  }
+
+
+ /* TOOLTIP NO CONFLICT
+  * =================== */
+
+  $.fn.tooltip.noConflict = function () {
+    $.fn.tooltip = old
+    return this
   }
 
 }(window.jQuery);
+
 });
