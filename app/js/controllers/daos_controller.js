@@ -27,7 +27,7 @@ define([
     title: 'DAOs',
 
     index: function(params) {
-      new DaoFactoriesController().index(params)
+      new DaoFactoriesController().index(params);
 
       new DaoFactory({ tableName: params.daoFactory }).fetch({
         success: function(daoFactory) {
