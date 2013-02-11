@@ -20,6 +20,7 @@
     "jade": "~0.27.7",
     "stylus": "~0.31.0",
     "bootstrap-amd": "~1.0.3",
-    "nib": "~0.9.1"
+    "nib": "~0.9.1",
+    "sequelize-restful": "git://github.com/sdepold/sequelize-restful.git"
   }
 }
