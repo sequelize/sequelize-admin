@@ -2,9 +2,9 @@
   "name": "js",
   "version": "0.0.0",
   "dependencies": {
-    "jquery": "~1.8.1",
+    "jquery": "~1.9.1",
     "chaplin": "~0.6.1",
-    "bootstrap": "~2.2.0",
+    "bootstrap": "git://github.com/sdepold/bootstrap.git#~v2.3.1",
     "bootstrap-datepicker": "latest",
     "handlebars.js": "~1.0.8",
     "jquery-serialize-object": "~1.0.0",
