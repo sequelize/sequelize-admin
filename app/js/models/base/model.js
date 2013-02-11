@@ -46,8 +46,12 @@ define([
       dataType: 'json'
     }, endpoint, options || {})
 
-    if (typeof endpoint.data !== 'undefined') {
+    if (endpoint.hasOwnProperty('data')) {
       _options.data = $.param(endpoint.data(model))
+    }
+
+    if (endpoint.hasOwnProperty('type') && (endpoint.type === 'head')) {
+      _options.dataType = 'text'
     }
 
     return _options
