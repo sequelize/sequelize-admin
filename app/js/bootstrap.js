@@ -55,7 +55,7 @@
     , urlArgs: 'bust=' +  (new Date()).getTime()
   })
 
-  require([ 'bootstrap', 'sequelize_admin' ], function(Bootstrap, SequelizeAdmin) {
+  require([ 'sequelize_admin' ], function(SequelizeAdmin) {
     new SequelizeAdmin({ title: 'fnord' }).initialize()
   })
 })()
