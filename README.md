@@ -2,6 +2,14 @@
 
 A connect module for managing database entries of registered sequelize models.
 
+## Look & Feel
+
+Here be dragons
+
+## Getting started
+
+Here be dragons
+
 ## Develompent notes
 
 ### Updating dependencies
