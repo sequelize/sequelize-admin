@@ -21,6 +21,6 @@
     "stylus": "~0.31.0",
     "bootstrap-amd": "~1.0.3",
     "nib": "~0.9.1",
-    "sequelize-restful": "git://github.com/sdepold/sequelize-restful.git"
+    "sequelize-restful": "~0.1.0"
   }
 }
