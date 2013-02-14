@@ -55,7 +55,9 @@
     , urlArgs: 'bust=' +  (new Date()).getTime()
   })
 
-  require([ 'sequelize_admin' ], function(SequelizeAdmin) {
-    new SequelizeAdmin({ title: 'fnord' }).initialize()
+  require([ 'sequelize_admin', 'jquery' ], function(SequelizeAdmin) {
+    require([ 'components/jquery-serialize-object/jquery.serialize-object' ], function() {
+      new SequelizeAdmin({ title: 'fnord' }).initialize()
+    })
   })
 })()
