@@ -13,6 +13,8 @@ define([
 
     events: {
       "click .dao-factory-actions .new": function(e) {
+        e.preventDefault()
+
         require(['controllers/daos_controller'], function(DaosController) {
           var tableName = $(e.target).parent().data('table-name')
           new DaosController()['new']({ tableName: tableName })
@@ -20,16 +22,19 @@ define([
       },
 
       "click .actions .edit": function(e) {
+        e.preventDefault()
+
         require(['controllers/daos_controller'], function(DaosController) {
           new DaosController().edit(this.getRowData(e.target))
         }.bind(this))
       },
 
       "click .actions .delete": function(e) {
+        e.preventDefault()
 
-        // require(['controllers/daos_controller'], function(DaosController) {
-        //   new DaosController().destroy(this.getRowData(e.target))
-        // }.bind(this))
+        require(['controllers/daos_controller'], function(DaosController) {
+          new DaosController().destroy(this.getRowData(e.target))
+        }.bind(this))
       }
     },
 

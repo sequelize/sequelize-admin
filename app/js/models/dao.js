@@ -30,18 +30,32 @@ define([
 
           return result
         }
-      }//,
+      },
 
-      // update: {
-      //   type: 'put',
-      //   url:  function(dao) {
-      //     debugger
-      //     return dao.endpoint + '/api/' + dao.get('daoFactory').get('tableName') + '/' + dao.get('id')
-      //   },
-      //   data: function(dao) {
-      //     return dao.attributes
-      //   }
-      // }
+      'delete': {
+        type: 'delete',
+        url: function(dao) {
+          return dao.endpoint + '/api/' + dao.get('daoFactory').get('tableName') + '/' + dao.get('id')
+        }
+      },
+
+      update: {
+        type: 'put',
+        url:  function(dao) {
+          return dao.endpoint + '/api/' + dao.get('daoFactory').get('tableName') + '/' + dao.get('id')
+        },
+        data: function(dao) {
+          var result = {}
+
+          for (var attribute in dao.get('daoFactory').get('attributes')) {
+            if (dao.get('daoFactory').get('attributes').hasOwnProperty(attribute) && dao.attributes.hasOwnProperty(attribute)) {
+              result[attribute] = dao.get(attribute)
+            }
+          }
+
+          return result
+        }
+      }
     },
 
     fetch: function() {

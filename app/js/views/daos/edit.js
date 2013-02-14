@@ -13,6 +13,26 @@ define([
     autoRender: true,
     container:  '.modal',
 
+    events: {
+      'keydown .modal-body form input': function(e) {
+        if (event.keyCode === 13) {
+          this.submitForm(e)
+        }
+      },
+      'submit .modal-body form': 'submitForm',
+      'click .modal-footer .btn-primary': 'submitForm'
+    },
+
+    submitForm: function(e) {
+      e.preventDefault()
+
+      var params = this.$el.find('form').serializeObject()
+
+      require([ 'controllers/daos_controller' ], function(DaosController) {
+        new DaosController().update(params)
+      }.bind(this))
+    },
+
     render: function() {
       if ($('.modal').length === 0) {
         $('<div>')

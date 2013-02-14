@@ -47,11 +47,26 @@ define([
     edit: function(params) {
       new Dao({ id: params.id, daoFactory: { tableName: params.tableName } }).fetch({
         success: function(dao) {
-          this.view = new EditView({
-            daoFactory:     dao.get('daoFactory'),
-            dao:            dao,
-            attributeNames: dao.getSortedAttributes()
-          })
+          this.view = new EditView({ model: dao })
+        }.bind(this)
+      })
+    },
+
+    update: function(params) {
+      var dao = new Dao({ id: params.id, daoFactory: { tableName: params.tableName } })
+
+      delete params.id
+      delete params.daoFactory
+
+      dao.save(params, {
+        success: function() {
+          $('.modal, .modal-backdrop').remove()
+          document.location.reload()
+        }.bind(this),
+
+        error: function() {
+          alert('something is broken!')
+          console.log(arguments)
         }.bind(this)
       })
     },
@@ -59,7 +74,8 @@ define([
     'new': function(params) {
       new DaoFactory(params).fetch({
         success: function(daoFactory) {
-          new NewView({ model: daoFactory })
+          var dao = new Dao({ daoFactory: daoFactory })
+          new NewView({ model: dao })
         }.bind(this),
 
         error: function() {
@@ -71,8 +87,8 @@ define([
     create: function(params) {
       new Dao(params).save({}, {
         success: function() {
-          console.log('asdasd')
-          $('.modal').modal('hide')
+          $('.modal, .modal-backdrop').remove()
+          document.location.reload()
         }.bind(this),
 
         error: function() {
@@ -83,13 +99,30 @@ define([
     },
 
     destroy: function(params) {
-      new Dao({ id: params.id, tableName: params.tableName }).fetch({
+      new Dao({ id: params.id, daoFactory: { tableName: params.tableName } }).fetch({
         success: function(dao) {
-          this.view = new EditView({
-            daoFactory:     dao.daoFactory,
-            dao:            dao,
-            attributeNames: dao.getSortedAttributes()
-          })
+          if (params.confirmed) {
+            dao.destroy({
+              success: function() {
+                $('.modal').modal('hide')
+                document.location.reload()
+              }.bind(this),
+
+              error: function() {
+                alert('something is broken!')
+                $('.modal').modal('hide')
+              }.bind(this)
+            })
+          } else {
+            require([ 'views/daos/destroy' ], function(DestroyView) {
+              new DestroyView({ model: dao })
+            })
+          }
+        }.bind(this),
+
+        error: function() {
+          alert('something is broken!')
+          console.log(arguments)
         }.bind(this)
       })
     }

@@ -26,7 +26,7 @@ define([
     submitForm: function(e) {
       e.preventDefault()
 
-      var params = this.$el.find('form').serializeJSON()
+      var params = this.$el.find('form').serializeObject()
 
       require(['controllers/daos_controller'], function(DaosController) {
         new DaosController().create(params)

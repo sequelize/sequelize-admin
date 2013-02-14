@@ -1,16 +1,18 @@
 <div class="modal-header">
   <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
   <h3 id="dao_factory_edit_label">
-    Edit <%= daoFactory.get('tableName') %> #<%= dao.get('id') %>
+    Edit <%= model.get('daoFactory').get('tableName') %> #<%= model.get('id') %>
   </h3>
 </div>
 <div class="modal-body">
   <form class="form-horizontal">
-    <% for (var key in daoFactory.get('attributes')) { %>
+    <input type="hidden" name="daoFactory[tableName]" value="<%= model.get('daoFactory').get('tableName') %>">
+
+    <% for (var key in model.get('daoFactory').get('attributes')) { %>
       <%
-        var dataType = daoFactory.get('attributes')[key]
-          , accessor = daoFactory.get('name') + "[" + key + "]"
-          , value    = dao.get(key)
+        var dataType = model.get('daoFactory').get('attributes')[key]
+          , accessor = key
+          , value    = model.get(key)
 
         if (typeof dataType === 'object') {
           dataType = dataType.type
