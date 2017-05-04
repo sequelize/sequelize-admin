@@ -1,5 +1,7 @@
 # sequelize-admin
 
+[![Greenkeeper badge](https://badges.greenkeeper.io/sequelize/sequelize-admin.svg)](https://greenkeeper.io/)
+
 A connect module for managing database entries of registered sequelize models.
 
 ## Look & Feel
