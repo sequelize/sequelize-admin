@@ -15,12 +15,12 @@
   "license": "BSD",
   "readmeFilename": "README.md",
   "dependencies": {
-    "lodash": "~1.0.0-rc.3",
-    "node-static": "~0.6.6",
-    "jade": "~0.27.7",
-    "stylus": "~0.31.0",
+    "lodash": "~4.17.4",
+    "node-static": "~0.7.9",
+    "jade": "~1.11.0",
+    "stylus": "~0.54.5",
     "bootstrap-amd": "~1.0.3",
-    "nib": "~0.9.1",
-    "sequelize-restful": "~0.1.0"
+    "nib": "~1.1.2",
+    "sequelize-restful": "~0.4.3"
   }
 }
